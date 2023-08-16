@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "Prime Feed",
+    "version": "0.1",
+    "description": "Curate Social Media feed posts to tailor them to YOUR preferences.",
+    "icons": {
+      "48": "icon.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.linkedin.com/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "permissions": ["activeTab"]
+  }
+  
