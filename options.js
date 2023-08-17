@@ -97,6 +97,11 @@ function saveProperties(platform, list) {
 function loadProperties() {
     chrome.storage.sync.get(null, function(items) {
         console.log(items);
+        // if items is empty, call resetToDefaults()
+        if (Object.keys(items).length === 0 && items.constructor === Object) {
+            resetToDefaults();
+        }
+        
         for (let platform in items) {
             let list = document.getElementById(`${platform}-list`);
             if (list == null){
@@ -122,7 +127,7 @@ function loadProperties() {
 }
 
 
-document.getElementById('reset-btn').addEventListener('click', function() {
+function resetToDefaults() {
     // Define the default properties for each platform
     const defaultProperties = {
         'linkedin': [
@@ -174,7 +179,9 @@ document.getElementById('reset-btn').addEventListener('click', function() {
     chrome.storage.sync.set(defaultProperties, function() {
         console.log('Restored default properties.');
     });
-});
+}
+
+document.getElementById('reset-btn').addEventListener('click', resetToDefaults);
 
 document.addEventListener("DOMContentLoaded", function() {
     // Load the saved API key when the page is loaded

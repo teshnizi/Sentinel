@@ -186,3 +186,4 @@ chrome.storage.sync.get(null, function(data) {
     console.log(data);
     observeFeed(filters, api_key);     // Start observing for new posts
 });
+
