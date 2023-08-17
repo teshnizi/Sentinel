@@ -1,70 +1,210 @@
 body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
 }
 
+h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+button {
+    cursor: pointer;
+}
+
+
 .social-section {
-    background-color: #ffffff;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
     padding: 15px;
+    max-width: 80%;
+    border-radius: 4px;
+}
+
+.card-header {
+    background-color: #e4e4e4; /* You can use any color that suits your design */
+    padding: 5px 5px; /* Adjust as needed */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid #d4d4d4; /* This creates a subtle line below the header */
     margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .social-title {
-    cursor: pointer;
+    margin: 0; /* This removes any default margin from the h1 */
 }
+
+.social-title {
+    /* margin-bottom: 15px; */
+    /* padding-bottom: 10px; */
+    /* border-bottom: 10px solid #e4e4e4; */
+    display: inline-block;
+}
+
 
 .properties-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    margin-bottom: 15px;
 }
 
-.properties-list > li {
+.properties-list li {
+    padding: 10px;
+    /* border-top: 1px solid #e4e4e4; */
+    border-bottom: 1px solid #e4e4e4;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0;
 }
 
-.toggle-button {
-    background-color: #0077b6;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+/* .properties-list li:last-child {
+    border-bottom: none;
+} */
+
+.properties-list li {
+    justify-content: flex-start;  /* Adjusts alignment */
 }
 
+
+/* Delete Button Styles */
 .delete-button {
-    background-color: #e63946;
-    color: white;
+    background-color: transparent; /* No background for the delete button */
+    color: #ff6b6b;
+    border: none;
+    font-size: 20px; /* Adjust as needed for the cross size */
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 10px; /* Spacing between the cross and the text */
+    transition: color 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+    color: #ff3f3f; 
+}
+
+/* Toggle Button Styles (to look like a switch) */
+.toggle-button {
+    background-color: #676869; 
+    color: #fff;
+    border: none;
+    width: 50px; /* Fixed width for switch */
+    height: 25px; /* Fixed height for switch */
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden; 
+    margin-left: auto;
+}
+
+.toggle-button:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: left 0.2s;
+}
+
+.toggle-button[data-state="On"]:before {
+    left: 27px;
+}
+
+.toggle-button[data-state="On"] {
+    background-color: #0077b6;
+}
+
+
+.add-button {
+    background-color: #0077b6;
+    color: #fff;
     border: none;
     padding: 5px 10px;
-    border-radius: 5px;
     margin-left: 10px;
-    cursor: pointer;
+    border-radius: 3px;
+}
+
+.add-button:hover, .toggle-button:hover {
+    background-color: #005a8d;
 }
 
 .add-property {
-    margin-top: 10px;
     display: flex;
-    gap: 10px;
+    align-items: center;
 }
 
-.add-property input {
-    flex-grow: 1;
+.add-property input[type="text"] {
+    flex: 1;
     padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #e4e4e4;
+    border-radius: 3px;
 }
 
-.add-button {
-    background-color: #52b788;
-    color: white;
+#reset-btn {
+    display: block;
+    background-color: #e63946; /* Red color to indicate caution */
+    color: #fff;
+    padding: 10px 15px;
     border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 3px;
+    text-align: center;
+    margin: 20px auto;
+    width: fit-content;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out; /* Smooth transition for hover */
+}
+
+#reset-btn:hover {
+    background-color: #d62828; /* Slightly darker shade on hover */
+}
+
+
+.properties-list {
+    font-size: small;
+}
+
+.info-text {
+    margin-bottom: 5px;
+    /* padding-bottom: 0px; */
+    /* border-bottom: 10px #e4e4e4; */
+    /* display: inline-block; */
+}
+
+hr {
+    border: none; /* Removes the border */
+    height: 2px;  /* Sets the thickness of the HR */
+    background-color: #0077b6; /* Sets the color */
+}
+
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: #f4f4f4; /* You can change this to a different color if you'd like */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for aesthetics */
+}
+
+.logo-image {
+    width: 60px;  /* Adjust based on your preferences */
+    height: 60px;
+    margin-right: 15px;
+    object-fit: cover; /* Keeps the aspect ratio of the image */
+    border-radius: 50%;  /* Makes the logo round, remove if you don't want it */
+}
+
+.app-name {
+    font-size: 36px; /* Adjust the font size as necessary */
+    color: #333;
+    font-weight: 700; /* Makes the font a bit bolder */
 }

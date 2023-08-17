@@ -6,48 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extension Options</title>
     <link rel="stylesheet" href="options.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
+
+<div class="logo-section">
+    <img src="icon512.png" alt="Sentinel Logo" class="logo-image">
+    <h1 class="app-name">Sentinel</h1>
+</div>
+
 <!-- LinkedIn Section -->
 <div class="social-section">
-    <h2 class="social-title" data-toggle="linkedin">LinkedIn ▼</h2>
     
-    <ul class="properties-list" id="linkedin-list">
-        <!-- Default Item -->
-        <li>
-            <span>Default LinkedIn Property 1</span>
-            <button class="toggle-button">On</button>
-        </li>
-        <!-- ... Add more default items as needed ... -->
-    </ul>
+    <div class="card-header">
+        <h1 class="social-title" data-toggle="linkedin">LinkedIn ▼</h1>
+    </div>
+    
+    <div class="content-holder" id="linkedin-content">
+        <h2 class="info-text">Remove a post if:</h2>
+        <hr>
+        <ul class="properties-list" id="linkedin-list">
+        </ul>
 
-    <div class="add-property">
-        <input type="text" placeholder="Add new property...">
-        <button class="add-button">Add</button>
+        <div class="add-property">
+            <input type="text" placeholder="It's ...">
+            <button class="add-button">Add</button>
+        </div>
     </div>
 </div>
 
 <!-- Twitter Section -->
 <div class="social-section">
-    <h2 class="social-title" data-toggle="twitter">Twitter ▼</h2>
-    
-    <ul class="properties-list" id="twitter-list">
-        <!-- Default Item -->
-        <li>
-            <span>Default Twitter Property 1</span>
-            <button class="toggle-button">On</button>
-        </li>
-        <!-- ... Add more default items as needed ... -->
-    </ul>
+    <div class="card-header">
+        <h1 class="social-title" data-toggle="twitter">Twitter ▼</h1>
+    </div>
+    <div class="content-holder" id="twitter-content">
+        <h2 class="info-text">Remove a post if:</h2>
+        <hr>
+        <ul class="properties-list" id="twitter-list">
+        </ul>
 
-    <div class="add-property">
-        <input type="text" placeholder="Add new property...">
-        <button class="add-button">Add</button>
+        <div class="add-property">
+            <input type="text" placeholder="It's ...">
+            <button class="add-button">Add</button>
+        </div>
     </div>
 </div>
 
 <!-- ... You can add more sections for other platforms similarly ... -->
+<button id="reset-btn">Reset to Defaults</button>
+
 
 <script src="options.js"></script>
 </body>

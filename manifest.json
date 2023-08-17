@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Prime Feed",
+    "name": "Sentinel",
     "version": "0.1",
     "description": "Curate Social Media feed posts to tailor them to YOUR preferences.",
     "icons": {

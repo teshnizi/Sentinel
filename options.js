@@ -6,14 +6,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.social-title').forEach(title => {
         title.addEventListener('click', function() {
             let platform = this.getAttribute('data-toggle');
-            let list = document.getElementById(`${platform}-list`);
+            display_name = platform.charAt(0).toUpperCase() + platform.slice(1);
             
+            let list = document.getElementById(`${platform}-list`);
+            let content = document.getElementById(`${platform}-content`);
             if (list.style.display === "none") {
                 list.style.display = "block";
-                title.textContent = `${platform} ▼`;
+                content.style.display = "block";
+                title.textContent = `${display_name} ▼`;
             } else {
                 list.style.display = "none";
-                title.textContent = `${platform} ►`;
+                content.style.display = "none";
+                title.textContent = `${display_name} ►`;
             }
         });
     });
@@ -42,9 +46,9 @@ function addPropertyToList(list, property, isUserItem) {
     if (isUserItem) {
         li.className = "user-item";
         li.innerHTML = `
+            <button class="delete-button">\u2715</button>
             <span>${property}</span>
-            <button class="toggle-button">On</button>
-            <button class="delete-button">Delete</button>
+            <button class="toggle-button" data-state="On"></button>
         `;
 
         li.querySelector('.delete-button').addEventListener('click', function() {
@@ -55,31 +59,33 @@ function addPropertyToList(list, property, isUserItem) {
     } else {
         li.innerHTML = `
             <span>${property}</span>
-            <button class="toggle-button">On</button>
+            <button class="toggle-button" data-state="On"></button>
         `;
     }
 
     li.querySelector('.toggle-button').addEventListener('click', function() {
-        if (this.textContent === "On") {
-            this.textContent = "Off";
-            this.style.backgroundColor = "#e63946";
+        if (this.getAttribute('data-state') === "On") {
+            this.setAttribute('data-state', 'Off');
+            this.style.backgroundColor = "#676869";  // Gray color for "Off" state
         } else {
-            this.textContent = "On";
-            this.style.backgroundColor = "#0077b6";
+            this.setAttribute('data-state', 'On');
+            this.style.backgroundColor = "#0077b6";  // Blue color for "On" state
         }
         let platform = list.closest('.social-section').querySelector('.social-title').getAttribute('data-toggle');
         saveProperties(platform, list);
     });
+    
 
     list.appendChild(li);
 }
+
 
 function saveProperties(platform, list) {
     let properties = Array.from(list.children).map(li => {
         return {
             value: li.querySelector('span').textContent,
             isUserItem: li.classList.contains('user-item'),
-            state: li.querySelector('.toggle-button').textContent
+            state: li.querySelector('.toggle-button').getAttribute('data-state')
         };
     });
 
@@ -101,11 +107,15 @@ function loadProperties() {
                 addPropertyToList(list, propertyObj.value, propertyObj.isUserItem);
 
                 let li = list.lastElementChild;
+                let toggleBtn = li.querySelector('.toggle-button');
                 if (propertyObj.state === 'Off') {
-                    let toggleBtn = li.querySelector('.toggle-button');
-                    toggleBtn.textContent = "Off";
-                    toggleBtn.style.backgroundColor = "#e63946";
+                    toggleBtn.textContent = "";
+                    toggleBtn.style.backgroundColor = "#676869";
+                } else {
+                    toggleBtn.textContent = "";
+                    toggleBtn.style.backgroundColor = "#0077b6";
                 }
+                toggleBtn.setAttribute('data-state', propertyObj.state);
             });
         }
     });
@@ -116,11 +126,22 @@ document.getElementById('reset-btn').addEventListener('click', function() {
     // Define the default properties for each platform
     const defaultProperties = {
         'linkedin': [
-            { value: 'It\'s an announcement ', isUserItem: false, state: 'On' }
+            { value: 'It\'s an announcement ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a self-improvement post (time-management, productivity hacks, how to socialize, etc.) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a career update (new job or promotion, job anniversary, resignation or retirement, etc.) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a news article ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a promotion or advertisement ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a job posting ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a flyer for networking or an events (hackathon, mixer, dinner, meetup, etc. ) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a scientific or research update (new paper, research findings, tech breakthrough, etc. ) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a book recommendation or review ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a flyer for a professional development program (webinar, online course, degree program) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a celebration post (winning an award or achieving something) ', isUserItem: false, state: 'Off' },
+            
             // ... Add other LinkedIn defaults here
         ],
         'twitter': [
-            { value: 'Joke or humor tweet', isUserItem: false, state: 'On' }
+            { value: 'It\'s Joke or humor tweet', isUserItem: false, state: 'On' }
             // ... Add other Twitter defaults here
         ]
         // ... Add defaults for other platforms
@@ -142,8 +163,9 @@ document.getElementById('reset-btn').addEventListener('click', function() {
             let li = list.lastElementChild;
             if (propertyObj.state === 'Off') {
                 let toggleBtn = li.querySelector('.toggle-button');
-                toggleBtn.textContent = "Off";
-                toggleBtn.style.backgroundColor = "#e63946";
+                toggleBtn.textContent = "";
+                toggleBtn.style.backgroundColor = "#676869";
+                toggleBtn.setAttribute('data-state', 'Off');
             }
         });
     }
