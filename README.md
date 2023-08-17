@@ -3,4 +3,4 @@
   <h1>Sentinel</h1>
 </p>
 
-Clean up your social media feed from BS and focus on the important stuff
+Clean up the BS from your social media feeds
