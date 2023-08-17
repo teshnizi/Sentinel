@@ -130,7 +130,7 @@ document.getElementById('reset-btn').addEventListener('click', function() {
             { value: 'It\'s a self-improvement post (time-management, productivity hacks, how to socialize, etc.) ', isUserItem: false, state: 'Off' },
             { value: 'It\'s a career update (new job or promotion, job anniversary, resignation or retirement, etc.) ', isUserItem: false, state: 'Off' },
             { value: 'It\'s a news article ', isUserItem: false, state: 'Off' },
-            { value: 'It\'s a promotion or advertisement ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s header mentions that it\'s a promoted post', isUserItem: false, state: 'Off' },
             { value: 'It\'s a job posting ', isUserItem: false, state: 'Off' },
             { value: 'It\'s a flyer for networking or an events (hackathon, mixer, dinner, meetup, etc. ) ', isUserItem: false, state: 'Off' },
             { value: 'It\'s a scientific or research update (new paper, research findings, tech breakthrough, etc. ) ', isUserItem: false, state: 'Off' },
@@ -175,3 +175,38 @@ document.getElementById('reset-btn').addEventListener('click', function() {
         console.log('Restored default properties.');
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Load the saved API key when the page is loaded
+    loadAPIKey();
+
+    // Save the API key when the 'Save' button is clicked
+    document.getElementById("api-key-save-btn").addEventListener("click", function() {
+        saveAPIKey();
+    });
+    
+    // The rest of your JS event listeners and functions go here...
+});
+
+function loadAPIKey() {
+    chrome.storage.sync.get("openai_api_key", function(data) {
+        if (data.openai_api_key) {
+            document.getElementById("api-key-input").value = data.openai_api_key;
+        }
+    });
+}
+
+function saveAPIKey() {
+    let apiKey = document.getElementById("api-key-input").value;
+    if (apiKey) {
+        chrome.storage.sync.set({ "openai_api_key": apiKey }, function() {
+            if (chrome.runtime.lastError) {
+                console.error(chrome.runtime.lastError);
+            } else {
+                alert("API Key saved successfully!");
+            }
+        });
+    } else {
+        alert("Please enter an API Key before saving.");
+    }
+}

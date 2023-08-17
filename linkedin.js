@@ -1,12 +1,11 @@
 const processedPosts = new Set();
 
-async function sendToOpenAI(initText, prompt) {
+async function sendToOpenAI(initText, prompt, api_key) {
     const OPENAI_ENDPOINT = "https://api.openai.com/v1/chat/completions";
-    const OPENAI_API_KEY = "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"; 
 
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
+        "Authorization": `Bearer ${api_key}`
     };
 
     const body = {
@@ -51,95 +50,106 @@ async function sendToOpenAI(initText, prompt) {
 }
 
 
-function logPosts() {
+function logPosts(filters, api_key) {
     // Select all posts
-    const posts = document.querySelectorAll('.feed-shared-update-v2__commentary');
+    const posts = document.querySelectorAll('.feed-shared-update-v2__commentary:not([data-processed])');
 
     posts.forEach(post => {
         const text = post.textContent.trim();
-
-        // Only log and add to the set if not processed
-        if (text && !processedPosts.has(text)) {
-            // Move up three levels from the post to the great-grandparent
-            let ancestor = post.parentElement && post.parentElement.parentElement
-            ? post.parentElement.parentElement.parentElement 
-            : null;;
-
-            // If the ancestor exists, find the anchor tag with an aria-label
-            let headerInfo = "";
-            if (ancestor) {
-                const anchorWithLabel = ancestor.querySelector('a[aria-label]');
-                if (anchorWithLabel) {
-                    headerInfo = anchorWithLabel.getAttribute('aria-label');
-                }
-            }
-
-            if (text.length > 5){
-                (async () => {
-                    const prompt = "Here's a social media post:" +
-                    "\n========== Header info\n" +
-                    headerInfo +
-                    "\n========== Content: \n" +
-                    text +
-                    "\n==========\n" +
-
-                    "\n\n For each one of the following properties, tell me if it is true for the post:" +
-                    "\n - It's content is not empty " +
-                    "\n - It's a self-improvement post " +
-                    "\n - It's an advice " +
-                    "\n - It's a promoted post"+
-                    "\n - It's a career update " +
-                    "\n - It's about someone being at an event " +
-                    "\n - It's a fund raise / accelerator admission announcement" +
-                    "\n - It's about Stanford University" +
-                    "\n\n Only respond with a json file, with properties as keys and false/true as values."
-                    
-                    initText = "{\n\"It's content is not empty\": true,\n"
-
-                    let result = await sendToOpenAI(initText, prompt);
-                    result = "{\n" + result
-                    
-                    let someTrue = false;
-                    try {
-                        let jsonObject = JSON.parse(result);
-                        console.log(jsonObject);
-                        someTrue = Object.values(jsonObject).some(value => value === true);
-                    } catch (error) {
-                        console.error("Error parsing JSON", error);
-                    }
-
-                    if (someTrue){
-                        console.log('Gone...');
-                        const smileyContainer = document.createElement('div');
-                        smileyContainer.innerHTML = '&#128578;'; // Unicode for a smiley face
-                        smileyContainer.style.fontSize = '24px'; // You can adjust the style as you wish
-                        smileyContainer.style.textAlign = 'center';
+        // if text is null or shorter than 7 characters, skip
+        if (!text || text.length < 7) { return; }
         
-                        // Replace the post with the smiley container
-                        const grandParent = post.parentElement.parentElement.parentElement;
-                        
-                        // Style the grandparent for centering
-                        grandParent.style.display = 'flex';
-                        grandParent.style.justifyContent = 'center';
-                        grandParent.style.alignItems = 'center';
-                        grandParent.style.height = '100%';  // This assumes that the grandparent originally has some defined height.
+        
+        let ancestor = post.parentElement && post.parentElement.parentElement
+        ? post.parentElement.parentElement.parentElement 
+        : null;;
 
-                        // Add the styled smiley
-                        grandParent.innerHTML = '<span style="font-size: 50px; padding: 20px;">😊</span>';
-                    }
-                    else {
-                        console.log(text + " \n::\n::\n " + result);
-                    }
-                })();
+        // If the ancestor exists, find the anchor tag with an aria-label
+        let headerInfo = "";
+        if (ancestor) {
+            const anchorWithLabel = ancestor.querySelector('a[aria-label]');
+            if (anchorWithLabel) {
+                headerInfo = anchorWithLabel.getAttribute('aria-label');
             }
-            processedPosts.add(text);
-
         }
+        (async () => {
+            let prompt = "Here's a social media post:" +
+            "\n========== Header info\n" +
+            headerInfo +
+            "\n========== Content: \n" +
+            text +
+            "\n==========\n" +
+
+            "\n\n For each one of the following properties, tell me if it is true for the post:" +
+            "\n - It's content is not empty "
+
+            for (let i = 0; i < filters.length; i++) {
+                prompt += "\n - " + filters[i];
+            }
+        
+            "\n\n Only respond with a json file, with properties as keys and false/true as values."
+            
+            initText = "{\n\"It's content is not empty\": true,\n"
+
+            let result = await sendToOpenAI(initText, prompt, api_key);
+
+            // trim the spaces at the end and beginning
+            result = result.trim();
+
+            result = "{\n" + result
+
+            // add a } at the end if it doesn't exist
+            if (result[result.length - 1] !== '}') {
+                // remove the last comma if it exists
+                if (result[result.length - 1] === ',') {
+                    result = result.slice(0, -1);
+                }
+
+                result += "\n}";
+            }
+
+
+            
+
+            
+            let someTrue = false;
+            
+            try {
+                let jsonObject = JSON.parse(result);
+                someTrue = Object.values(jsonObject).some(value => value === true);
+            } catch (error) {
+                console.error("Error parsing JSON", error);
+                console.error("Error result\n", result);
+                console.error("Error prompt\n", prompt);
+            }
+            
+            // console.log('-------------\n' + prompt + " \n::\n::\n " + result + "\n::\n::\n " + someTrue + '\n-------------\n');
+            if (someTrue){
+                const smileyContainer = document.createElement('span');
+                smileyContainer.innerHTML = '😊'; // Unicode for a smiley face
+                smileyContainer.style.fontSize = '50px'; // You can adjust the style as you wish
+                smileyContainer.style.padding = '20px';
+
+                const grandParent = post.parentElement.parentElement.parentElement;
+                
+                // Style the grandparent for centering
+                grandParent.style.display = 'flex';
+                grandParent.style.justifyContent = 'center';
+                grandParent.style.alignItems = 'center';
+                grandParent.style.height = '100%';  // This assumes that the grandparent originally has some defined height.
+                
+                grandParent.innerHTML = ''; // Clear the grandparent
+                grandParent.appendChild(smileyContainer);
+
+            }
+        })();
+            
+        post.setAttribute('data-processed', 'true');
     });
 }
 
 
-function observeFeed() {
+function observeFeed(filters) {
     // Select the feed or an element that wraps around all the posts.
     // For this example, I'm using the body, but you should use a more specific container if possible.
     const feed = document.body;
@@ -149,7 +159,7 @@ function observeFeed() {
         mutations.forEach(mutation => {
             // If new nodes are added
             if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                logPosts();
+                logPosts(filters, api_key);
             }
         });
     });
@@ -162,12 +172,17 @@ function observeFeed() {
 }
 
 
-chrome.storage.sync.get('keyword', function(data) {
-    let keyword = data.keyword || '';
-    console.log(keyword);
+chrome.storage.sync.get(null, function(data) {
+    // let options = data.linkedin || '';
     console.log('WTF ');
-    logPosts();        // Log existing posts
-    observeFeed();     // Start observing for new posts
+    let filters = [];
+    for (let key in data.linkedin) {
+        if (data.linkedin[key].state === "Off")
+            continue;
+        filters.push(data.linkedin[key].value);
+    }
+    console.log(filters);
+    api_key = data.openai_api_key;
+    console.log(data);
+    observeFeed(filters, api_key);     // Start observing for new posts
 });
-
-
