@@ -162,6 +162,12 @@ function observeFeed() {
 }
 
 
-logPosts();        // Log existing posts
-observeFeed();     // Start observing for new posts
+chrome.storage.sync.get('keyword', function(data) {
+    let keyword = data.keyword || '';
+    console.log(keyword);
+    console.log('WTF ');
+    logPosts();        // Log existing posts
+    observeFeed();     // Start observing for new posts
+});
+
 
