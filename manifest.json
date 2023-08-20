@@ -2,9 +2,9 @@
     "manifest_version": 3,
     "name": "Sentinel",
     "version": "0.2",
-    "description": "Curate Social Media feed posts to tailor them to YOUR preferences.",
+    "description": "Clean up the BS from your social media feeds",
     "icons": {
-      "48": "icon.png"
+      "64": "icon512.png"
     },
     "content_scripts": [
       {
@@ -12,7 +12,7 @@
         "js": ["linkedin.js"]
       }
     ],
-    "permissions": ["activeTab", "storage"],
+    "permissions": ["storage"],
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true
