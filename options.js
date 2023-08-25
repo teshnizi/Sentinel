@@ -146,7 +146,21 @@ function resetToDefaults() {
             // ... Add other LinkedIn defaults here
         ],
         'twitter': [
-            { value: 'It\'s Joke or humor tweet', isUserItem: false, state: 'On' }
+            { value: 'It\'s Joke or funny tweet', isUserItem: false, state: 'Off' },
+            { value: 'It\'s about Joe Biden or Donald Trump', isUserItem: false, state: 'Off' },
+            { value: 'It\'s about hollywood stars', isUserItem: false, state: 'Off' },
+            { value: 'It\'s an announcement ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a self-improvement post (time-management, productivity hacks, how to socialize, etc.) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a career update (new job or promotion, job anniversary, resignation or retirement, etc.) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a news article ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s header mentions that it\'s an Advertisement', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a job posting ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a flyer for networking or an events (hackathon, mixer, dinner, meetup, etc. ) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a scientific or research update (new paper, research findings, tech breakthrough, etc. ) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a book recommendation or review ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a flyer for a professional development program (webinar, online course, degree program) ', isUserItem: false, state: 'Off' },
+            { value: 'It\'s a celebration post (winning an award or achieving something) ', isUserItem: false, state: 'Off' },
+            
             // ... Add other Twitter defaults here
         ]
         // ... Add defaults for other platforms

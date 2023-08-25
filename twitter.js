@@ -49,29 +49,72 @@ async function sendToOpenAI(initText, prompt, api_key) {
     }
 }
 
+// Assuming you already have a reference to the post element in `postElement`
+function extractTextFromPost(postElement) {
+    let finalText = '';
+  
+    // Loop through each child node
+    for (const node of postElement.childNodes) {
+        finalText += node.textContent;
+    }
+    
+    return finalText.trim();  // Remove any leading/trailing whitespace
+  }
+
+
+function extractHeaderFromPost(headerElement) {
+    let header = '';
+    firstChild = headerElement.firstElementChild;
+    secondChild = firstChild.nextElementSibling;
+    
+    userDiv = firstChild
+    for (let i = 0; i < 5; i++) {
+        userDiv = userDiv.firstElementChild;
+    }
+
+    console.log('=======');
+    console.log(headerElement);
+    console.log(secondChild);
+    let AdInfo = '';
+    let username = '';
+    if (secondChild) {
+        AdInfo = secondChild.firstElementChild.firstElementChild
+        // if it has textContent, then get it. Otherwise, set it to empty string
+        if (AdInfo && AdInfo.textContent) {
+            AdInfo = AdInfo.textContent;
+        } else {
+            AdInfo = '';
+        }
+        username = '@' + userDiv.getAttribute('href').substring(1);
+    }
+
+    finalText = 'Username: ' + username + '\n' + 'Post Info: ' + AdInfo;
+    return finalText.trim();
+}
 
 function logPosts(filters, api_key) {
     // Select all posts
-    const posts = document.querySelectorAll('.feed-shared-update-v2__commentary:not([data-processed])');
+    const posts = document.querySelectorAll('[data-testid="tweetText"]:not([data-processed="true"])');
 
-    posts.forEach(post => {
-        const text = post.textContent.trim();
+    
+    posts.forEach(post => {   
+        post.setAttribute('data-processed', 'true');
+
+        const text = extractTextFromPost(post);
+
         // if text is null or shorter than 7 characters, skip
         if (!text || text.length < 7) { return; }
         
         
-        let ancestor = post.parentElement && post.parentElement.parentElement
-        ? post.parentElement.parentElement.parentElement 
-        : null;;
+        // Navigate to the grandparent
+        let grandparentElement = post.parentNode.parentNode;
 
-        // If the ancestor exists, find the anchor tag with an aria-label
-        let headerInfo = "";
-        if (ancestor) {
-            const anchorWithLabel = ancestor.querySelector('a[aria-label]');
-            if (anchorWithLabel) {
-                headerInfo = anchorWithLabel.getAttribute('aria-label');
-            }
-        }
+        // Get the grandparent's first child
+        let headerChild = grandparentElement.firstElementChild.firstElementChild;
+
+        headerInfo = extractHeaderFromPost(headerChild);
+    
+
         (async () => {
             let prompt = "Here's a social media post:" +
             "\n========== Header info\n" +
@@ -107,12 +150,9 @@ function logPosts(filters, api_key) {
 
                 result += "\n}";
             }
-
-
-            
-
             
             let someTrue = false;
+            console.log('RES: ' + result);
             
             try {
                 let jsonObject = JSON.parse(result);
@@ -173,11 +213,13 @@ function observeFeed(filters) {
 
 
 chrome.storage.sync.get(null, function(data) {
+    // let options = data.twitter || '';
+    
     let filters = [];
-    for (let key in data.linkedin) {
-        if (data.linkedin[key].state === "Off")
+    for (let key in data.twitter) {
+        if (data.twitter[key].state === "Off")
             continue;
-        filters.push(data.linkedin[key].value);
+        filters.push(data.twitter[key].value);
     }
     console.log(filters);
     api_key = data.openai_api_key;
