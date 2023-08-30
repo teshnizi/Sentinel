@@ -3,6 +3,10 @@
   <h1>Sentinel</h1>
 </p>
 
+
+https://github.com/teshnizi/Sentinel/assets/48642434/5f39c577-b59d-4037-b154-1ea21fabfc29
+
+
 Social media platforms collect your data and train recommendation algorithms designed to keep you engaged for as long as possible. Here's the catch:
 
 - 💊 Your feed may become increasingly addictive without being more informative.
