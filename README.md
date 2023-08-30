@@ -8,9 +8,7 @@ Social media platforms collect your data and train recommendation algorithms des
 - 💊 Your feed may become increasingly addictive without being more informative.
 - 👥 These platforms collect data about your interests and behaviours, which they might sell to third-party companies.
 
-Last week, Axel Peytavin and I built Sentinel, a browser extension that lets you fine-tune your recommendation algorithms locally, using natural language.
-
-Sentinel simply asks you what you want to see and then uses AI to align your feed to your preferences accordingly:
+Sentinel is a browser extension that lets you fine-tune your recommendation algorithms locally, using natural language. Sentinel simply asks you what you want to see and then uses AI to align your feed to your preferences accordingly:
 
 - 🎯 You get to choose what your feed looks like
 - 🔐 Your engagement data becomes potentially more private as companies can’t see your final feed
