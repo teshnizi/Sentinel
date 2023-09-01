@@ -3,6 +3,7 @@
   <h1>Sentinel</h1>
 </p>
 
+Do you have features in mind that can make Sentinel better? Email us! We'd love to have you as a contributor.
 
 https://github.com/teshnizi/Sentinel/assets/48642434/5f39c577-b59d-4037-b154-1ea21fabfc29
 
