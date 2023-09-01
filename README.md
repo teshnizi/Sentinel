@@ -3,7 +3,7 @@
   <h1>Sentinel</h1>
 </p>
 
-Do you have features in mind that can make Sentinel better? Email us! We'd love to have you as a contributor.
+$${\color{purple}Please \space reach \space out \space if \space you \space are \space interested \space in \space contributing! (teshnizi@stanford.edu)}$$
 
 https://github.com/teshnizi/Sentinel/assets/48642434/5f39c577-b59d-4037-b154-1ea21fabfc29
 
@@ -21,5 +21,4 @@ Sentinel is a browser extension that lets you fine-tune your recommendation algo
   
 [Install it here](https://chrome.google.com/webstore/detail/sentinel/fkmbhpipdlamijgojpjflhonefdgaehj/related?hl=en)
 
-Please reach out if you want to contribute!
 
