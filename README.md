@@ -3,7 +3,7 @@
   <h1>Sentinel</h1>
 </p>
 
-$${\color{purple}Please \space reach \space out \space if \space you \space are \space interested \space in \space contributing! (teshnizi@stanford.edu)}$$
+$${\color{purple}Please \space reach \space out \space via \space email \space if \space you \space are \space interested \space in \space contributing!}$$
 
 https://github.com/teshnizi/Sentinel/assets/48642434/5f39c577-b59d-4037-b154-1ea21fabfc29
 
