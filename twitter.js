@@ -39,12 +39,10 @@ async function sendToOpenAI(initText, prompt, api_key) {
 
         const data = await response.json();
 
-        // Assuming you want the assistant's reply:
         const assistantReply = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
         return assistantReply;
-
     } catch (error) {
-        console.error("There was a problem with the fetch operation:", error.message);
+        console.error("Error in sendToOpenAI:", error.message);
         return null;
     }
 }
@@ -96,50 +94,47 @@ function logPosts(filters, api_key) {
     // Select all posts
     const posts = document.querySelectorAll('[data-testid="tweetText"]:not([data-processed="true"])');
 
-    
-    posts.forEach(post => {   
-        post.setAttribute('data-processed', 'true');
+    posts.forEach(async (post) => {
+        try {
+            post.setAttribute('data-processed', 'true');
 
-        const text = extractTextFromPost(post);
+            const text = extractTextFromPost(post);
 
-        // if text is null or shorter than 7 characters, skip
-        if (!text || text.length < 7) { return; }
-        
-        
-        // Navigate to the grandparent
-        let grandparentElement = post.parentNode.parentNode;
+            // if text is null or shorter than 7 characters, skip
+            if (!text || text.length < 7) { return; }
 
-        // Get the grandparent's first child
-        let headerChild = grandparentElement.firstElementChild.firstElementChild;
+            // Navigate to the grandparent
+            let grandparentElement = post.parentNode.parentNode;
 
-        headerInfo = extractHeaderFromPost(headerChild);
-    
+            // Get the grandparent's first child
+            let headerChild = grandparentElement.firstElementChild.firstElementChild;
 
-        (async () => {
+            headerInfo = extractHeaderFromPost(headerChild);
+
             let prompt = "Here's a social media post:" +
-            "\n========== Header info\n" +
-            headerInfo +
-            "\n========== Content: \n" +
-            text +
-            "\n==========\n" +
+                "\n========== Header info\n" +
+                headerInfo +
+                "\n========== Content: \n" +
+                text +
+                "\n==========\n" +
 
-            "\n\n For each one of the following properties, tell me if it is true for the post:" +
-            "\n - It's content is not empty "
+                "\n\n For each one of the following properties, tell me if it is true for the post:" +
+                "\n - It's content is not empty ";
 
             for (let i = 0; i < filters.length; i++) {
                 prompt += "\n - " + filters[i];
             }
-        
-            "\n\n Only respond with a json file, with properties as keys and false/true as values."
-            
-            initText = "{\n\"It's content is not empty\": true,\n"
+
+            prompt += "\n\n Only respond with a JSON file, with properties as keys and false/true as values.";
+
+            const initText = "{\n\"It's content is not empty\": true,\n";
 
             let result = await sendToOpenAI(initText, prompt, api_key);
 
             // trim the spaces at the end and beginning
             result = result.trim();
 
-            result = "{\n" + result
+            result = "{\n" + result;
 
             // add a } at the end if it doesn't exist
             if (result[result.length - 1] !== '}') {
@@ -150,10 +145,10 @@ function logPosts(filters, api_key) {
 
                 result += "\n}";
             }
-            
+
             let someTrue = false;
             console.log('RES: ' + result);
-            
+
             try {
                 let jsonObject = JSON.parse(result);
                 someTrue = Object.values(jsonObject).some(value => value === true);
@@ -162,29 +157,30 @@ function logPosts(filters, api_key) {
                 console.error("Error result\n", result);
                 console.error("Error prompt\n", prompt);
             }
-            
+
             // console.log('-------------\n' + prompt + " \n::\n::\n " + result + "\n::\n::\n " + someTrue + '\n-------------\n');
-            if (someTrue){
+            if (someTrue) {
                 const smileyContainer = document.createElement('span');
                 smileyContainer.innerHTML = '😊'; // Unicode for a smiley face
                 smileyContainer.style.fontSize = '50px'; // You can adjust the style as you wish
                 smileyContainer.style.padding = '20px';
 
                 const grandParent = post.parentElement.parentElement.parentElement;
-                
+
                 // Style the grandparent for centering
                 grandParent.style.display = 'flex';
                 grandParent.style.justifyContent = 'center';
                 grandParent.style.alignItems = 'center';
                 grandParent.style.height = '100%';  // This assumes that the grandparent originally has some defined height.
-                
+
                 grandParent.innerHTML = ''; // Clear the grandparent
                 grandParent.appendChild(smileyContainer);
 
             }
-        })();
-            
-        post.setAttribute('data-processed', 'true');
+        } catch (error) {
+            // Log the error
+            console.error("Error in logPosts:", error.message);
+        }
     });
 }
 
