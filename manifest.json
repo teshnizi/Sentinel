@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Sentinel",
-    "version": "0.2",
-    "description": "Clean up the BS from your social media feeds",
+    "version": "0.4",
+    "description": "Clean up the BS from your social media feed",
     "icons": {
       "64": "icon512.png"
     },
@@ -13,7 +13,7 @@
         "js": ["linkedin.js"]
       },
       {
-        "matches": ["https://twitter.com/*", "https://www.twitter.com/*", "https://mobile.twitter.com/*", "https://x.com/*"],
+        "matches": ["https://twitter.com/*", "https://www.twitter.com/*", "https://mobile.twitter.com/*", "https://x.com/*", "https://www.x.com/*"],
 
         "js": ["twitter.js"]  
       }

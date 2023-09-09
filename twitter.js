@@ -72,9 +72,6 @@ function extractHeaderFromPost(headerElement) {
         userDiv = userDiv.firstElementChild;
     }
 
-    console.log('=======');
-    console.log(headerElement);
-    console.log(secondChild);
     let AdInfo = '';
     let username = '';
     if (secondChild) {
@@ -134,6 +131,8 @@ function logPosts(filters, api_key) {
             
             initText = "{\n\"It's content is not empty\": true,\n"
 
+            console.log('prompt: ' + prompt);
+
             let result = await sendToOpenAI(initText, prompt, api_key);
 
             // trim the spaces at the end and beginning
@@ -166,7 +165,7 @@ function logPosts(filters, api_key) {
             // console.log('-------------\n' + prompt + " \n::\n::\n " + result + "\n::\n::\n " + someTrue + '\n-------------\n');
             if (someTrue){
                 const smileyContainer = document.createElement('span');
-                smileyContainer.innerHTML = '😊'; // Unicode for a smiley face
+                smileyContainer.innerHTML = "<br>"; // Unicode for a smiley face
                 smileyContainer.style.fontSize = '50px'; // You can adjust the style as you wish
                 smileyContainer.style.padding = '20px';
 
@@ -222,6 +221,9 @@ chrome.storage.sync.get(null, function(data) {
         filters.push(data.twitter[key].value);
     }
     console.log(filters);
+    if (filters.length === 0) {
+        return;
+    }
     api_key = data.openai_api_key;
     console.log(data);
     observeFeed(filters, api_key);     // Start observing for new posts

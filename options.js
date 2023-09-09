@@ -47,7 +47,7 @@ function addPropertyToList(list, property, isUserItem) {
         li.className = "user-item";
         li.innerHTML = `
             <button class="delete-button">\u2715</button>
-            <span>${property}</span>
+            <span class="filter-description">${property}</span>
             <button class="toggle-button" data-state="On"></button>
         `;
 
@@ -58,7 +58,7 @@ function addPropertyToList(list, property, isUserItem) {
         });
     } else {
         li.innerHTML = `
-            <span>${property}</span>
+            <span class="filter-description">${property}</span>
             <button class="toggle-button" data-state="On"></button>
         `;
     }

@@ -1,11 +1,11 @@
+/* Global Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     color: #333;
     line-height: 1.6;
-    font-family: 'Poppins', sans-serif;
 }
 
 h2 {
@@ -14,101 +14,90 @@ h2 {
     font-weight: normal;
 }
 
-button {
+button, input {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     cursor: pointer;
-    font-family: 'Poppins';
-    border: none;
-    border-radius: 3px;
-    text-align: center;
-    padding: 10px 10px;
-    margin-left: 5px;
-    width: fit-content;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out; /* Smooth transition for hover */
 }
 
-
+/* Social Section Styles */
 .social-section {
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
+    margin: 5px auto;
     padding: 15px;
-    max-width: 80%;
+    max-width: 95%;
     border-radius: 4px;
 }
 
 .card-header {
-    background-color: #e4e4e4; /* You can use any color that suits your design */
-    padding: 5px 5px; /* Adjust as needed */
+    background-color: #e4e4e4;
+    padding: 5px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    border-bottom: 1px solid #d4d4d4; /* This creates a subtle line below the header */
+    border-bottom: 1px solid #d4d4d4;
     margin-bottom: 20px;
 }
 
-.social-title {
-    margin: 0; /* This removes any default margin from the h1 */
+.social-title, .info-text {
+    margin: 0;
+    font-weight: bold;
 }
-
-.social-title {
-    /* margin-bottom: 15px; */
-    /* padding-bottom: 10px; */
-    /* border-bottom: 10px solid #e4e4e4; */
-    display: inline-block;
-}
-
 
 .properties-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
     margin-bottom: 15px;
+    font-size: small;
+    display: flex;
+    flex-direction: column;
 }
 
 .properties-list li {
     padding: 10px;
-    /* border-top: 1px solid #e4e4e4; */
     border-bottom: 1px solid #e4e4e4;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
-/* .properties-list li:last-child {
-    border-bottom: none;
-} */
-
-.properties-list li {
-    justify-content: flex-start;  /* Adjusts alignment */
+/* Button Styles */
+button {
+    border: none;
+    border-radius: 3px;
+    transition: background-color 0.2s ease-in-out;
 }
 
-
-/* Delete Button Styles */
 .delete-button {
-    background-color: transparent; /* No background for the delete button */
+    background-color: transparent;
     color: #ff6b6b;
     border: none;
-    font-size: 20px; /* Adjust as needed for the cross size */
-    cursor: pointer;
+    font-size: 20px;
     padding: 5px;
-    margin-right: 10px; /* Spacing between the cross and the text */
-    transition: color 0.2s ease-in-out;
+    margin-right: 10px;
 }
 
-.delete-button:hover {
-    color: #ff3f3f; 
-}
-
-/* Toggle Button Styles (to look like a switch) */
-.toggle-button {
-    background-color: #676869; 
+.add-button {
+    background-color: #1a9bcb;
     color: #fff;
-    border: none;
-    width: 50px; /* Fixed width for switch */
-    height: 25px; /* Fixed height for switch */
+}
+
+.add-button:hover, .delete-button:hover {
+    background-color: #005a8d;
+    color: #ff3f3f;
+}
+
+/* Toggle Button */
+.toggle-button {
+    background-color: #676869;
+    color: #fff;
+    width: 50px;
+    height: 25px;
     border-radius: 15px;
     position: relative;
-    overflow: hidden; 
     margin-left: auto;
 }
 
@@ -132,143 +121,81 @@ button {
     background-color: #1a9bcb;
 }
 
-
-.add-button {
+/* Additional Styles */
+hr {
+    border: none;
+    height: 2px;
     background-color: #1a9bcb;
-    color: #fff;
-    /* padding: 5px 5px; */
 }
 
-.add-button:hover, .toggle-button:hover {
+.logo-section, .row, .api-key-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-section {
+    padding: 20px 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+.logo-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.app-name {
+    font-size: 36px;
+    color: #333;
+    font-weight: 700;
+}
+
+.api-key-section {
+    margin: 5px 0;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+#api-key-input {
+    flex: 1;
+    margin: 0 10px;
+    margin-left: 20px;
+    width: 70%;
+    font-weight: 100;
+}
+
+#api-key-save-btn, #reset-btn {
+    margin: 5px;
+    background-color: #0077b6;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+#reset-btn {
+    background-color: #e63946;
+}
+
+#api-key-save-btn:hover, #reset-btn:hover {
     background-color: #005a8d;
 }
+
 
 .add-property {
     display: flex;
     align-items: center;
-}
-
-/* all inputs have bold font  */
-input {
-    font-family: 'Poppins', sans-serif;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    justify-content: space-between;
+    width: 100%;  /* This ensures the container takes up all available space */
 }
 
 .add-property input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #e4e4e4;
-    border-radius: 3px;
-
+    flex-grow: 1;  /* This allows the input to take up any available space */
+    margin-right: 10px;  /* Optional: to give some space between the input and the button */
 }
 
-#reset-btn {
-    display: block;
-    background-color: #e63946; /* Red color to indicate caution */
-    color: #fff;
-    margin-right: 20px;
+.filter-description {
+    max-width: 85%;
 }
-
-#reset-btn:hover {
-    background-color: #d62828; /* Slightly darker shade on hover */
-}
-
-
-.properties-list {
-    font-size: small;
-}
-
-.info-text {
-    margin-bottom: 5px;
-    /* padding-bottom: 0px; */
-    /* border-bottom: 10px #e4e4e4; */
-    /* display: inline-block; */
-    /* make it bold! */
-    font-weight: bold;
-}
-
-hr {
-    border: none; /* Removes the border */
-    height: 2px;  /* Sets the thickness of the HR */
-    background-color: #1a9bcb; /* Sets the color */
-}
-
-
-.logo-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0;
-    background-color: #ffffff; 
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1); /* Shadow only on the bottom */
-}
-
-.logo-image {
-    width: 60px;  /* Adjust based on your preferences */
-    height: 60px;
-    margin-right: 15px;
-    object-fit: cover; /* Keeps the aspect ratio of the image */
-    border-radius: 50%;  /* Makes the logo round, remove if you don't want it */
-}
-
-.app-name {
-    font-size: 36px; /* Adjust the font size as necessary */
-    color: #333;
-    font-weight: 700; /* Makes the font a bit bolder */
-}
-
-
-.row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
-}
-
-
-.api-key-section {
-    display: flex;
-
-    align-items: center;
-    margin: 5px 0;
-    padding: 10px;
-  
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-/* .api-key-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    margin-bottom: 10px;
-} */
-
-#api-key-input {
-    font-family: 'Poppins', sans-serif;
-    padding: 10px;
-    font-weight: 100;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    flex: 1; /* This ensures the input takes up all available space */
-    margin: 0 10px; 
-    margin-left: 20px;
-    width: 70%;
-}
-
-#api-key-save-btn{
-    font-family: 'Poppins', sans-serif;
-    margin: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: #0077b6;
-    color: #ffffff;
-}
-
-#api-key-save-btn:hover {
-    background-color: #005a8d;
-}
-
-
