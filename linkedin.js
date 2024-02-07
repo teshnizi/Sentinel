@@ -52,7 +52,7 @@ async function sendToOpenAI(initText, prompt, api_key) {
 
 function logPosts(filters, api_key) {
     // Select all posts
-    const posts = document.querySelectorAll('.feed-shared-update-v2__commentary:not([data-processed])');
+    const posts = document.querySelectorAll('.feed-shared-update-v2:not([data-processed])');
 
     posts.forEach(post => {
         const text = post.textContent.trim();
